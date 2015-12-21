@@ -6,6 +6,7 @@ services:
   - docker
 
 before_install:
+- eval `ssh-agent`
 - ssh-keygen -f new -t rsa -N ''
 - ssh-add new
 - docker build -t mybase .
