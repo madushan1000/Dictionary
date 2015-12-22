@@ -11,6 +11,7 @@ before_install:
 - ssh-add new
 - docker build -t mybase .
 - sudo docker run --privileged=true -d --name 'mydoc' -t mybase /sbin/my_init
+- sleep 10
 - ssh root@$(docker inspect -format '{{ .NetworkSettings.IPAddress }}' 'mydoc') sh -c "wget -qO- https://get.docker.com/ | sudo sh && service docker start && docker run ubuntu"
 
 script:
