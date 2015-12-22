@@ -13,7 +13,7 @@ before_install:
 - sudo docker run --privileged=true -d --name 'mydoc' -t mybase /sbin/my_init
 - sleep 10
 - export TEST_SERVER=$(docker inspect -format '{{ .NetworkSettings.IPAddress }}' 'mydoc')
-- ssh -t -o StrictHostKeyChecking=no root@$TEST_SERVER sh -c "apt-get update && apt-get -y install docker-engine  && service docker start && docker run ubuntu"
+- ssh -t -o StrictHostKeyChecking=no root@$TEST_SERVER sh -c "wget get.docker.com -o run.sh && sh run.sh && service docker start && docker run ubuntu"
 
 script:
 - bundle exec rake test
