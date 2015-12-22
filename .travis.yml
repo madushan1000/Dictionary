@@ -12,7 +12,8 @@ before_install:
 - docker build -t mybase .
 - sudo docker run --privileged=true -d --name 'mydoc' -t mybase /sbin/my_init
 - sleep 10
-- ssh -o StrictHostKeyChecking=n root@$(docker inspect -format '{{ .NetworkSettings.IPAddress }}' 'mydoc') sh -c "curl -L https://get.docker.com/ | sudo sh && service docker start && docker run ubuntu"
+- export TEST_SERVER=$(docker inspect -format '{{ .NetworkSettings.IPAddress }}' 'mydoc')
+- ssh -t -o StrictHostKeyChecking=n root@$TEST_SERVER sh -c "curl -L 'https://get.docker.com/' | sudo sh && service docker start && docker run ubuntu"
 
 script:
 - bundle exec rake test
